@@ -1,4 +1,4 @@
 export const environment = {
     /* LOCAL */
-    url_TheMealDB: "www.themealdb.com",
+    url_TheMealDB: "https://www.themealdb.com",
 }
