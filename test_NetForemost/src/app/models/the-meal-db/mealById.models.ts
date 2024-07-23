@@ -7,3 +7,7 @@ export interface Meal_Details {
   strMealThumb: string;
   strTags: string;
 }
+
+export interface MealDetailsResponse {
+  meals: Meal_Details[];
+}

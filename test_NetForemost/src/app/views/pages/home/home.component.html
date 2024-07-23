@@ -1,26 +1,41 @@
-<p>home works!</p>
+<div class="containerHome">
 
+  <h1>The Meal DB!</h1>
+<!-- formulario -->
 <form [formGroup]="mealForm" (ngSubmit)="send()">
   <mat-form-field appearance="outline" class="">
     <mat-label>Meal</mat-label>
     <input matInput type="text" formControlName="mealSearch" />
   </mat-form-field>
 
-  <button
-    mat-raised-button
-    type="submit"
-    color="primary"
-    >
+  <button mat-raised-button type="submit" color="primary">
     <!-- [ngClass]="showTouched ? 'btn-select' : 'btn-unselect'" -->
     Search
   </button>
 </form>
 
 <!-- categorias -->
+<button  class="btn-cat" mat-button color="primary"
+[matMenuTriggerFor]="menu" [disabled]="allCategories.length === 0">
+  {{ selectedCategory ? 'Categoria: ' + selectedCategory.strCategory : 'Buscar por Categoría' }}
+</button>
+
+<mat-menu #menu="matMenu" class="custom-menu" yPosition="below" >
+  <button mat-menu-item *ngFor="let category of allCategories" (click)="onCategorySelected(category)">
+    {{ category.strCategory }}
+  </button>
+</mat-menu>
 
 <!-- componente de visualizacion -->
- <div class="cardsMeal">
-   <div *ngFor="let meal of meals">
-     <app-card-meal [name]="meal.strMeal" [img]="meal.strMealThumb" [category]="meal.strCategory"></app-card-meal>
-   </div>
- </div>
+<div class="cardsMeal">
+  <div *ngFor="let meal of meals">
+    <app-card-meal
+      [name]="meal.strMeal"
+      [img]="meal.strMealThumb"
+      [category]="meal.strCategory"
+      [id]="meal.idMeal"
+    ></app-card-meal>
+  </div>
+</div>
+
+</div>

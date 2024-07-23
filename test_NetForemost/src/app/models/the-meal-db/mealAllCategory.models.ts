@@ -4,3 +4,7 @@ export interface Category {
   strCategoryThumb: string;
   strCategoryDescription: string;
 }
+
+export interface CategoryResponse {
+  categories: Category[];
+}
