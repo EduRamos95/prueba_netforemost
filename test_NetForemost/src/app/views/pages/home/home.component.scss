@@ -1,10 +1,36 @@
 .cardsMeal {
+  padding: 32px;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.containerHome {
+    height: 100%;
     padding: 32px;
-    // width: 100vw;
-    // height: 100%;
 
     display: flex;
-    flex-direction: row;
-    gap: 32px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 16px;
+
+    h1 {
+        text-align: center;
+    }
+    
+    form {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 16px;
+
+        button {
+            height: 56px;
+            min-width: 100px;
+        }
+    }
+
+    .btn-cat {
+        min-height: 50px;
+    }
 }

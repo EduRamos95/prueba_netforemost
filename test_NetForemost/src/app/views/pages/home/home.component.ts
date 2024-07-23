@@ -17,6 +17,9 @@ import { HttpClientModule, HttpErrorResponse, HttpResponse } from '@angular/comm
 import { MealService } from '../../../services/meal/meal.service';
 import { SearchMeal, SearchMealResponse } from '../../../models/the-meal-db/mealByCategory.models';
 import { CardMealComponent } from './components/card-meal/card-meal.component';
+import { Category, CategoryResponse } from '../../../models/the-meal-db/mealAllCategory.models';
+import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @Component({
@@ -31,8 +34,10 @@ import { CardMealComponent } from './components/card-meal/card-meal.component';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatSelectModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatMenuModule,
     CardMealComponent,
   ],
 })
@@ -41,6 +46,14 @@ export class HomeComponent implements OnInit {
   public loading: boolean = false;
   public mealForm!: FormGroup;
   public meals: SearchMeal[] = [];
+
+  // Controls
+  private mealSearch: string = "mealSearch";
+
+  // Category 
+  public allCategories: Category[] = [];
+  public selectedCategory: Category | null = null;
+
 
   constructor(
     private fb: FormBuilder,
@@ -51,6 +64,7 @@ export class HomeComponent implements OnInit {
 
 
   public ngOnInit(): void {
+    this.searchAllCategory();
     this.initializedForm();
   }
 
@@ -60,26 +74,67 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  public send(): void {
-    console.log(this.mealForm.get("mealSearch")?.value);
-    const name:string = this.mealForm.get("mealSearch")?.value ?? "";
-    if (name) {
-      this.mealService.searchByMealName(name).subscribe(
-        {
-          next: (res: HttpResponse<SearchMealResponse>) => {
-            // loading=false;
-            this.meals = res.body?.meals ?? [];
-            this.cdr.detectChanges();
-            
-          },
-          error: (error: HttpErrorResponse) => {
-            // loading=false;
-            
-          },
-        }
-      )
-    }
+  private searchByName(name:string):void {
+    if (!name) return;
+    this.mealService.searchByMealName(name).subscribe(
+      {
+        next: (res: HttpResponse<SearchMealResponse>) => {
+          // loading=false;
+          this.meals = res.body?.meals ?? [];
+          this.selectedCategory = null;
+          this.cdr.detectChanges();
+        },
+        error: (error: HttpErrorResponse) => {
+          // loading=false;
+        },
+      }
+    )
+  }
 
-    console.log(`enviar: `)
+  private searchAllCategory(): void {
+    this.mealService.AllCategory().subscribe(
+      {
+        next: (res: HttpResponse<CategoryResponse>) => {
+          // loading=false;
+          this.allCategories = res.body?.categories ?? [];
+          this.cdr.detectChanges();
+        },
+        error: (error: HttpErrorResponse) => {
+          // loading=false;
+        },
+      }
+    )
+  }
+
+  private searchByCategory(name:string): void {
+    if (!name) return;
+    // limpiar
+    this.mealForm.get(this.mealSearch)?.setValue("");
+    this.mealService.searchByCategoryName(name).subscribe(
+      {
+        next: (res: HttpResponse<SearchMealResponse>) => {
+          // loading=false;
+          let resBody:SearchMeal[] = res.body?.meals ?? [];
+          resBody = resBody.map((e:SearchMeal) => ({...e, strCategory:name}));
+          console.log(resBody);
+          this.meals = resBody;
+          this.cdr.detectChanges();
+        },
+        error: (error: HttpErrorResponse) => {
+          // loading=false;
+        },
+      }
+    )
+  }
+
+  public onCategorySelected(category: Category): void {
+    this.searchByCategory(category.strCategory);
+    this.selectedCategory = category;
+  }
+
+
+  public send(): void {
+    const name:string = this.mealForm.get(this.mealSearch)?.value ?? "";
+    this.searchByName(name);
   }
 }
