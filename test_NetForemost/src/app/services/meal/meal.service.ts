@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environment/environment';
 import { SearchMeal, SearchMealResponse } from '../../models/the-meal-db/mealByCategory.models';
 import { ApiRoutes_TheMealDB } from '../../utils/config/api/themealdb';
-import { Category } from '../../models/the-meal-db/mealAllCategory.models';
+import { Category, CategoryResponse } from '../../models/the-meal-db/mealAllCategory.models';
 import { Meal_Details } from '../../models/the-meal-db/mealById.models';
 
 @Injectable({
@@ -32,16 +32,16 @@ export class MealService {
     return this.http.get<SearchMealResponse>(`${this.appUrl}${ctrl}?s=${encodeName}`, {observe: 'response'});
   }
 
-  public searchByCategoryName(name:string): Observable<HttpResponse<SearchMeal>> {
-    const ctrl: string = ApiRoutes_TheMealDB.searchByName;
+  public searchByCategoryName(name:string): Observable<HttpResponse<SearchMealResponse>> {
+    const ctrl: string = ApiRoutes_TheMealDB.searchByCategory;
     const encodeName = encodeURIComponent(name);
 
-    return this.http.get<SearchMeal>(`${this.appUrl}${ctrl}?c=${encodeName}`, {observe: 'response'});
+    return this.http.get<SearchMealResponse>(`${this.appUrl}${ctrl}?c=${encodeName}`, {observe: 'response'});
   }
 
-  public AllCategory(): Observable<HttpResponse<Category>> {
+  public AllCategory(): Observable<HttpResponse<CategoryResponse>> {
     const ctrl: string = ApiRoutes_TheMealDB.AllCategory;
 
-    return this.http.get<Category>(`${this.appUrl}${ctrl}`, {observe: 'response'});
+    return this.http.get<CategoryResponse>(`${this.appUrl}${ctrl}`, {observe: 'response'});
   }
 }
