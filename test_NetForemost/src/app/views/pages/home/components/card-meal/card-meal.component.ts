@@ -13,4 +13,9 @@ export class CardMealComponent {
   @Input() name:string = "";
   @Input() img:string = "";
   @Input() category:string = "";
+
+  onDetails() {
+    // cargar valor al servicio
+    // navegar de pagina
+  }
 }
