@@ -19,6 +19,8 @@
 <!-- categorias -->
 
 <!-- componente de visualizacion -->
-<div *ngFor="let meal of meals">
-  <app-card-meal [name]="meal.strMeal" [img]="meal.strMealThumb" [category]="meal.strCategory"></app-card-meal>
-</div>
+ <div class="cardsMeal">
+   <div *ngFor="let meal of meals">
+     <app-card-meal [name]="meal.strMeal" [img]="meal.strMealThumb" [category]="meal.strCategory"></app-card-meal>
+   </div>
+ </div>
