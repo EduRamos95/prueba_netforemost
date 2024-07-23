@@ -1,0 +1,14 @@
+.cardMeal {
+    min-width: 250px;
+    max-width: 500px;
+}
+
+.cardMeal img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.containerDetail {
+    padding: 32px;
+}
