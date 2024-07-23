@@ -6,6 +6,13 @@
   flex-wrap: wrap;
 }
 
+::ng-deep .mat-mdc-menu-panel {
+    width: calc(100vw - 64px);
+    max-width: calc(100vw - 64px) !important;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
 .containerHome {
     height: 100%;
     padding: 32px;
