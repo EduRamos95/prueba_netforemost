@@ -5,7 +5,7 @@ import { environment } from '../../../environment/environment';
 import { SearchMeal, SearchMealResponse } from '../../models/the-meal-db/mealByCategory.models';
 import { ApiRoutes_TheMealDB } from '../../utils/config/api/themealdb';
 import { Category, CategoryResponse } from '../../models/the-meal-db/mealAllCategory.models';
-import { Meal_Details } from '../../models/the-meal-db/mealById.models';
+import { Meal_Details, MealDetailsResponse } from '../../models/the-meal-db/mealById.models';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +19,10 @@ export class MealService {
     this.appUrl = this.properties.url_TheMealDB;
   }
 
-  public searchByMealId(id:string): Observable<HttpResponse<Meal_Details>> {
+  public searchByMealId(id:string): Observable<HttpResponse<MealDetailsResponse>> {
     const ctrl: string = ApiRoutes_TheMealDB.searchByID;
 
-    return this.http.get<Meal_Details>(`${this.appUrl}${ctrl}?i=${id}`, {observe: 'response'});
+    return this.http.get<MealDetailsResponse>(`${this.appUrl}${ctrl}?i=${id}`, {observe: 'response'});
   }
 
   public searchByMealName(name:string): Observable<HttpResponse<SearchMealResponse>> {
